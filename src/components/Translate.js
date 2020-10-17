@@ -1,31 +1,58 @@
-import React, { useState } from 'react';
+// API_KEY = AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM
+
+import React, { useState, useEffect } from 'react';
 import Dropdown from './Dropdown';
+import Convert from './Convert';
 
 const options = [
   {
-    language: "Afrikaans",
+    label: "Afrikaans",
     value: "af"
   },
   {
-    language: "Arabic",
+    label: "Arabic",
     value: "ar"
   },
   {
-    language: "Hindi",
+    label: "Hindi",
     value: "hi"
+  },
+  {
+    label: "French",
+    value: "fr"
   }
 ];
 
 const Translate = () => {
   const [language, setLanguage] = useState(options[0])
+  const [text, setText] = useState("I love REACT");
+  const [debouncedText, setDebouncedText] = useState(text);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => setDebouncedText(text), 500);
+
+    return (() => {
+      clearTimeout(timerId);
+    });
+  }, [text])
 
   return (
     <div>
+      <div className='ui form'>
+          <div className="field">
+            <label>Enter text</label>
+            <input value={text} onChange={(e) => setText(e.target.value)} />
+          </div>
+      </div>
       <Dropdown
+        label={"Select a language"}
         options={options}
         selected={language}
         onSelectedChange={setLanguage}
       />
+      <hr />
+      <h3 className='ui header'>Output</h3>
+      <Convert language={language} text={text}/>
     </div>
   );
 };
