@@ -48,6 +48,7 @@ export default () => {
           onSelectedChange={setSelected}
         /> : null
       }
+      <div style={{fontWeight: 'bold', color: selected.value, marginTop: '8px'}} >{`This text is ${selected.value}`}</div>
     </div>
   );
 };
