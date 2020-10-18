@@ -34,11 +34,32 @@ const options = [
   }
 ];
 
-export default () => {
+const showDropdown = () => {
+  // const [selected, setSelected] = useState(options[0]);
 
+  if (window.location.pathname === '/dropdown') {
+    return (
+      <Dropdown
+        // options={options}
+        // label={'Select a color'}
+        // selected={selected}
+        // onSelectedChange={setSelected}
+      />
+    );
+  }
+};
+
+const showComponent = (route, component) => {
+  return window.location.pathname === route ? component : null;
+};
+
+export default () => {
   return (
     <div>
-      <Translate />
+      {showComponent('/', <Accordion items={items}/>)}
+      {showComponent('/list', <Search />)}
+      {showDropdown()}
+      {showComponent('/translate', <Translate />)}
     </div>
   );
 };
