@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import Header from './Header';
 import Accordion from './Accordion';
 import Search from './Search';
 import Dropdown from './Dropdown';
 import Translate from './Translate';
+import Route from './Route'
 
 const items = [
   {
@@ -16,6 +18,10 @@ const items = [
   {
     title: "How do you use React?",
     content: "You use React by creating components"
+  },
+  {
+    title: "Why am I here?",
+    content: "To learn REACT"
   }
 ];
 
@@ -34,32 +40,29 @@ const options = [
   }
 ];
 
-const showDropdown = () => {
-  // const [selected, setSelected] = useState(options[0]);
-
-  if (window.location.pathname === '/dropdown') {
-    return (
-      <Dropdown
-        // options={options}
-        // label={'Select a color'}
-        // selected={selected}
-        // onSelectedChange={setSelected}
-      />
-    );
-  }
-};
-
-const showComponent = (route, component) => {
-  return window.location.pathname === route ? component : null;
-};
-
 export default () => {
+  const [selected, setSelected] = useState(options[0])
+
   return (
     <div>
-      {showComponent('/', <Accordion items={items}/>)}
-      {showComponent('/list', <Search />)}
-      {showDropdown()}
-      {showComponent('/translate', <Translate />)}
+      <Header />
+      <Route path='/'>
+        <Accordion items={items} />
+      </Route>
+      <Route path='/list'>
+        <Search />
+      </Route>
+      <Route path='/dropdown'>
+        <Dropdown
+          options={options}
+          label={'Select a color'}
+          selected={selected}
+          onSelectedChange={setSelected}
+        />
+      </Route>
+      <Route path='/translate'>
+        <Translate />
+      </Route>
     </div>
   );
 };
